@@ -1,0 +1,52 @@
+<main>
+    <section id="deatils-page">
+        <div class="wrapper">
+            <div class="product-img">
+                <img src="{{currHouse.homeImage}}">
+            </div>
+            <div class="product-info">
+                <div class="product-text">
+                    <div class="product-text">
+                        <h1>Name: {{currHouse.homeName}}</h1>
+                        <h2>Type: {{currHouse.type}}</h2>
+                        <h4>Year: {{currHouse.year}}</h4>
+                        <h4>City: {{currHouse.city}}</h4>
+                        <p>{{currHouse.propertyDescription}}</p>
+
+                    {{#if hasTenants}}
+                        <!-- if there are already tenants of the housing, separate their names with a comma and a space ", "  -->
+                        <p>People rented this housing: {{userNameTenants}}</p>
+                    {{else}}
+                        <!-- If not display: -->
+                        <p>People rented this housing: There are no tenants yet.</p>
+                    {{/if}}
+                    </div>
+                </div>
+
+                {{#if isAuthenticated}}
+                <!-- if there is no registered user, do not display buttons-->
+                <div class="product-btn">
+                    {{#if isOwner}}
+                        <!-- Only for registered user and creator of the housing offer-->
+                        <a href="/catalog/{{currHouse._id}}/edit" class="edit">Edit</a>
+                        <a href="/catalog/{{currHouse._id}}/delete" class="remove">Delete</a>
+                    {{else}}
+                        
+                        {{#if hasRented}}
+                        <p class="alRentHome">You have already rent this home</p>
+                        {{else}}
+                            {{#if noHouseLeft}}
+                                <!-- logged in user with no available pieces-->
+                                <p class="no-housing">No Housing Available!</p>
+                            {{else}}
+                                <!-- logged in user with available pieces-->
+                                 <a href="/catalog/{{currHouse._id}}/rent" class="rentHome">Rent a home, available {{currHouse.availablePieces}} housing</a>
+                            {{/if}}
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </section>
+</main>
